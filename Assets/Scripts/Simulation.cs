@@ -8,7 +8,9 @@ public class Simulation : MonoBehaviour
     // public Transform textureTransform;
     public Painter painter;
     public Color colour;
+    
 
+    public static int width = 10;
     public static bool paused = false;
 
     private void OnValidate() {
@@ -21,6 +23,7 @@ public class Simulation : MonoBehaviour
         if (!Input.GetKey(KeyCode.W)){
             // calculate what pixel it is
             drawPixel(getImagePixel(painter.getPos(), texture2), texture2, colour);
+            // drawPixels(getPointsInCircle(painter.getPos(), width), texture2, colour);
             // Vector2[] pixels = { Input.mousePosition, new Vector2(Input.mousePosition.x+10, Input.mousePosition.y+10)};
             // drawPixels(pixels, texture2, Color.black);
         }
@@ -50,8 +53,8 @@ public class Simulation : MonoBehaviour
     }
 
     // Update a series of pixels
-    public void drawPixels(Vector3[] pixels, Texture2D texture, Color colour) {
-        foreach (Vector3 pixel in pixels) {
+    public void drawPixels(Vector2[] pixels, Texture2D texture, Color colour) {
+        foreach (Vector2 pixel in pixels) {
             texture.SetPixel((int)pixel.x, (int)pixel.y, colour);
         }
         texture.Apply();
