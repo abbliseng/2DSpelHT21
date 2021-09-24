@@ -1,16 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Simulation : MonoBehaviour
 {
     public Texture2D texture2; // should be a component get
     public Painter painter;
     public Color colour;
+
+    public Color[] colours;
     
 
-    public static int width = 10;
+    public static int width = 1;
     public static bool paused = false;
+
+    public GameObject t0;
+    public GameObject t00;
+    public GameObject t000;
+
+    public Sprite[] numbers;
+
+    private void Start() {
+        UpdateWidthDisplay();
+        // numbers = Resources.LoadAll<Sprite>("Numbers");
+    }
 
     private void Update() {
         if (!Input.GetKey(KeyCode.W)){
@@ -25,7 +39,21 @@ public class Simulation : MonoBehaviour
         }
     }
 
+    public void UpdateWidthDisplay() {
+        int h = (int)Mathf.Floor(width / 100);
+        t000.GetComponent<Image>().sprite = numbers[h];
+        int t = (int)Mathf.Floor(width%100 / 10);
+        t00.GetComponent<Image>().sprite = numbers[t];
+        int o = (int)width%100%10;
+        t0.GetComponent<Image>().sprite = numbers[o];
+    }
+
+    public void setColour(int colID) {
+        colour = colours[colID];
+    }
+
     public static bool PauseGame() {
+        // Change the sprites here too.
         if (paused) {
             Time.timeScale = 1f;
             paused = false;

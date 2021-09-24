@@ -36,4 +36,8 @@ public class Painter : MonoBehaviour
     public Vector3 getPos() {
         return gameObject.transform.position;
     }
+
+    public void resetVelocity() {
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+    }
 }
