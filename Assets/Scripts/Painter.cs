@@ -29,7 +29,6 @@ public class Painter : MonoBehaviour
             gameObject.transform.position,
             anchor
         };
-        // Debug.Log(points[1] + " : " + gameObject.transform.position);
         lr.positionCount = 2;
         lr.SetPositions(points);
     }
