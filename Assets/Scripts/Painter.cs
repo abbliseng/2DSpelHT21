@@ -13,9 +13,9 @@ public class Painter : MonoBehaviour
         // Calculate distance and direction from object to mouse
         Vector2 mousePos = new Vector2(Simulation.getMouseCenteredPos().x, Simulation.getMouseCenteredPos().y);
         Vector2 dist = mousePos - new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        drawBucketMouseLine();
         // Apply force to object in same direction
         gameObject.GetComponent<Rigidbody2D>().AddForce(dist.normalized*speed*Time.deltaTime);
-        drawBucketMouseLine();
     }
 
     // Draw line from center of bucket to mouse pointer

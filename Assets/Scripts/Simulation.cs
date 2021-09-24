@@ -7,6 +7,9 @@ public class Simulation : MonoBehaviour
     public Texture2D texture2; // should be a component get
     // public Transform textureTransform;
     public Painter painter;
+    public Color colour;
+
+    public static bool paused = false;
 
     private void OnValidate() {
         // Debug.Log("Validating...");
@@ -14,7 +17,7 @@ public class Simulation : MonoBehaviour
         // textureTransform = gameObject.transform.GetChild(0);
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         if (Input.GetKey(KeyCode.W)){
             // calculate what pixel it is
             drawPixel(getImagePixel(painter.getPos(), texture2), texture2, Color.black);
@@ -25,7 +28,21 @@ public class Simulation : MonoBehaviour
             // Create new texture with specified settings.
             // Or just paint the whole image white.
             clearImage(texture2);
+        } else if(Input.GetKeyDown(KeyCode.Space)) {
+            if (paused) {
+                Time.timeScale = 1f;
+                // Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
+                paused = false;
+            } else {
+                Time.timeScale = 0f;
+                // Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
+                paused = true;
+            }
+            // Debug.Log("Pause");
         }
+    }
+
+    private void FixedUpdate() {
     }
 
     // Update a series of pixels
