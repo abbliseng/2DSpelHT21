@@ -18,31 +18,35 @@ public class Simulation : MonoBehaviour
     }
 
     private void Update() {
-        if (Input.GetKey(KeyCode.W)){
+        if (!Input.GetKey(KeyCode.W)){
             // calculate what pixel it is
-            drawPixel(getImagePixel(painter.getPos(), texture2), texture2, Color.black);
+            drawPixel(getImagePixel(painter.getPos(), texture2), texture2, colour);
             // Vector2[] pixels = { Input.mousePosition, new Vector2(Input.mousePosition.x+10, Input.mousePosition.y+10)};
             // drawPixels(pixels, texture2, Color.black);
         }
-        else if(Input.GetKey(KeyCode.R)) {
+        if(Input.GetKey(KeyCode.R)) {
             // Create new texture with specified settings.
             // Or just paint the whole image white.
             clearImage(texture2);
-        } else if(Input.GetKeyDown(KeyCode.Space)) {
-            if (paused) {
-                Time.timeScale = 1f;
-                // Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
-                paused = false;
-            } else {
-                Time.timeScale = 0f;
-                // Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
-                paused = true;
-            }
-            // Debug.Log("Pause");
+        }
+        // if(Input.GetKeyDown(KeyCode.Space)) {
+        //     // Debug.Log("Pause");
+        //     PauseGame();
+        // }
+        if(Input.GetKey(KeyCode.Mouse1)) {
+            Painter.anchor = getMouseCenteredPos();
         }
     }
 
-    private void FixedUpdate() {
+    public static bool PauseGame() {
+        if (paused) {
+            Time.timeScale = 1f;
+            paused = false;
+        } else {
+            Time.timeScale = 0f;
+            paused = true;
+        }
+        return paused;
     }
 
     // Update a series of pixels
@@ -76,11 +80,12 @@ public class Simulation : MonoBehaviour
         //     (Camera.main.orthographicSize*2*Camera.main.aspect)/texture.width,
         //     (Camera.main.orthographicSize*2)/texture.height
         // );
+
         Vector2 scalor = new Vector2(
             (Camera.main.orthographicSize*2*Camera.main.aspect),
             (Camera.main.orthographicSize*2)
         );
-        Debug.Log(scalor);
+        // Debug.Log(scalor);
 
         Vector3 payload = worldSpacePos;
         payload.x = (payload.x + texture.width/2);

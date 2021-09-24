@@ -6,16 +6,20 @@ public class Painter : MonoBehaviour
 {
     
     public LineRenderer lr;
-    public float speed = 1f; 
+    public float speed = 1f;
+    public static Vector3 anchor;
 
     void FixedUpdate()
     {
         // Calculate distance and direction from object to mouse
-        Vector2 mousePos = new Vector2(Simulation.getMouseCenteredPos().x, Simulation.getMouseCenteredPos().y);
+        Vector2 mousePos = new Vector2(anchor.x, anchor.y);
         Vector2 dist = mousePos - new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
-        drawBucketMouseLine();
         // Apply force to object in same direction
         gameObject.GetComponent<Rigidbody2D>().AddForce(dist.normalized*speed*Time.deltaTime);
+    }
+
+    void Update() {
+        drawBucketMouseLine();
     }
 
     // Draw line from center of bucket to mouse pointer
@@ -23,7 +27,7 @@ public class Painter : MonoBehaviour
         // 
         Vector3[] points = new Vector3[] {
             gameObject.transform.position,
-            Simulation.getMouseCenteredPos()
+            anchor
         };
         // Debug.Log(points[1] + " : " + gameObject.transform.position);
         lr.positionCount = 2;
