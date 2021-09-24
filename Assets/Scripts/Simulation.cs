@@ -14,7 +14,8 @@ public class Simulation : MonoBehaviour
 
     private void Update() {
         if (!Input.GetKey(KeyCode.W)){
-            drawPixel(getImagePixel(painter.getPos(), texture2), texture2, colour);
+            // drawPixel(getImagePixel(painter.getPos(), texture2), texture2, colour);
+            drawPixels(pointsInSquare(painter.getPos(), width, texture2), texture2, colour);
         }
         if(Input.GetKey(KeyCode.R)) {
             clearImage(texture2);
@@ -36,8 +37,8 @@ public class Simulation : MonoBehaviour
     }
 
     // Update a series of pixels
-    public void drawPixels(Vector2[] pixels, Texture2D texture, Color colour) {
-        foreach (Vector2 pixel in pixels) {
+    public void drawPixels(Vector3[] pixels, Texture2D texture, Color colour) {
+        foreach (Vector3 pixel in pixels) {
             texture.SetPixel((int)pixel.x, (int)pixel.y, colour);
         }
         texture.Apply();
@@ -70,5 +71,15 @@ public class Simulation : MonoBehaviour
         Vector3 pz = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pz.z = -1;
         return pz;
+    }
+
+    public Vector3[] pointsInSquare(Vector3 p,int radius, Texture2D texture) {
+        Vector3[] points = new Vector3[radius*radius];
+        for (int y = 0; y < radius; y++) {
+            for (int x = 0; x < radius; x++) {
+                points[x*y] = getImagePixel((p + new Vector3(x-radius/2,y-radius/2,0)), texture);
+            }
+        }
+        return points;
     }
 }
