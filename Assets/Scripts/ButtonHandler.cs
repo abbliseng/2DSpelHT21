@@ -6,6 +6,13 @@ public class ButtonHandler : MonoBehaviour
 {
     public Simulation sim;
 
+    private void Update() {
+        if(Input.GetKey(KeyCode.Escape)) {
+            PauseGame();
+            ShowPauseMenu();
+        }
+    }
+
     public void PauseGame() {
         Simulation.PauseGame();
     }
