@@ -7,6 +7,7 @@ public class Simulation : MonoBehaviour
 {
     public Texture2D texture2; // should be a component get
     public Painter painter;
+    public SpriteRenderer painterColour;
     public Color colour;
 
     public Color[] colours;
@@ -50,6 +51,8 @@ public class Simulation : MonoBehaviour
 
     public void setColour(int colID) {
         colour = colours[colID];
+        painterColour.color = colour;
+        // painterColour.color = new Color32(255, 255, 150, 255);
     }
 
     public static bool PauseGame() {
