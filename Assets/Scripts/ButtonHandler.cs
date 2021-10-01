@@ -5,12 +5,17 @@ using UnityEngine;
 public class ButtonHandler : MonoBehaviour
 {
     public Simulation sim;
+    public GameObject pauseMenu;
 
     private void Update() {
-        if(Input.GetKey(KeyCode.Escape)) {
-            PauseGame();
-            ShowPauseMenu();
+        if(Input.GetKeyDown(KeyCode.Escape)) {
+            PauseMenu();
         }
+    }
+
+    public void PauseMenu() {
+        PauseGame();
+        pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
     }
 
     public void PauseGame() {
