@@ -13,8 +13,16 @@ public class ButtonHandler : MonoBehaviour
         }
     }
 
+    private void Start() {
+        PauseMenu();
+    }
+
     public void PauseMenu() {
-        PauseGame();
+        if (!pauseMenu.activeInHierarchy && Simulation.paused) {
+            // no
+        } else {
+            PauseGame();
+        }
         pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
     }
 
