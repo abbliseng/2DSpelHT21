@@ -108,9 +108,65 @@ public class Simulation : MonoBehaviour
         Vector3[] points = new Vector3[radius*radius];
         for (int y = 0; y < radius; y++) {
             for (int x = 0; x < radius; x++) {
-                points[x*y] = getImagePixel((p + new Vector3(x-radius/2,y-radius/2,0)), texture);
+                points[x*y] = getImagePixel((p + new Vector3(x-radius+(radius/2),y-radius+(radius/2),0)), texture);
             }
         }
         return points;
+    }
+
+    // Implementing Mid-Point Circle
+    // Drawing Algorithm
+    public void midPointCircleDraw(Vector3 center, int r)
+    {
+        Vector3[] points = new Vector3[r*r];
+        int x = r, y = 0;
+        // Printing the initial point on the
+        // axes after translation
+        Debug.Log("(" + (x + center.x) + ", " + (y + center.y) + ")");
+        // When radius is zero only a single
+        // point will be printed
+        if (r > 0) {
+            Debug.Log("(" + (x + center.x)+ ", " + (-y + center.y) + ")");
+            Debug.Log("(" + (y + center.x)+ ", " + (x + center.y) + ")");
+            Debug.Log("(" + (-y + center.x)+ ", " + (x + center.y) + ")");
+        }
+        // Initialising the value of P
+        int P = 1 - r;
+        while (x > y)
+        {
+            y++;
+            // Mid-point is inside or on the perimeter
+            if (P <= 0) {
+                P = P + 2 * y + 1;
+            }
+            // Mid-point is outside the perimeter
+            else
+            {
+                x--;
+                P = P + 2 * y - 2 * x + 1;
+            }
+            // All the perimeter points have already
+            // been printed
+            if (x < y) {
+                break;
+            }
+            // Printing the generated point and its
+            // reflection in the other octants after
+            // translation
+            Debug.Log("(" + (x + center.x)+ ", " + (y + center.y) + ")");
+            Debug.Log("(" + (-x + center.x)+ ", " + (y + center.y) + ")");
+            Debug.Log("(" + (x + center.x) +", " + (-y + center.y) + ")");
+            Debug.Log("(" + (-x + center.x)+ ", " + (-y + center.y) + ")");
+            // If the generated point is on the
+            // line x = y then the perimeter points
+            // have already been printed
+            if (x != y)
+            {
+                Debug.Log("(" + (y + center.x)+ ", " + (x + center.y) + ")");
+                Debug.Log("(" + (-y + center.x)+ ", " + (x + center.y) + ")");
+                Debug.Log("(" + (y + center.x)+ ", " + (-x + center.y) + ")");
+                Debug.Log("(" + (-y + center.x)+ ", " + (-x + center.y) +")");
+            }
+        }
     }
 }
